@@ -29,7 +29,7 @@ class Win(WinFunc):
         self.main_menu = Menu(self.root)
         self.root.config(menu=self.main_menu)
         self.bigfont = font.Font(family="Veranda",size=20)
-        self.buttonFont = font.Font(size=18)
+        self.buttonFont = font.Font(size=20)
 
     def menu_add(self, menu, data):
         for line in data:
@@ -92,6 +92,7 @@ class Win(WinFunc):
             ["Отделения текст", self.otbor_dep_text],
             ["ФН текст", self.otbor_fiscal_text],
             ["ЗН текст", self.otbor_serial_text],
+            ["Все терминалы по отдениям", self.otbor_all_on_dep],
 
             ["Выбор", self.otbor_otbor],
             ["Отделения от до", self.otbor_text],
@@ -304,7 +305,7 @@ class Win(WinFunc):
 
         
 
-
+        self.root.geometry("1600x800")
         self.root.mainloop()
         
 

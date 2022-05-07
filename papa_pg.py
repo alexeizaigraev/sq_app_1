@@ -8,7 +8,8 @@ import shutil
 def db_operator(execstr, vec=[]):
     info = ''
     try:
-        con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        info += "open\n"
         cur = con.cursor()
         if vec:
             vec =  good_vec(vec)
@@ -27,7 +28,7 @@ def db_operator(execstr, vec=[]):
 def get_data(query):
     arr = []
     try:
-        con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
         cur = con.cursor()
         cur.execute(query)
         rows = cur.fetchall()
@@ -54,7 +55,7 @@ def refresh_table(table_name, fname):
     count = 0
     q_err = 0
     arr = file_to_arr_nosharp(fname)[1:]
-    con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
     cur = con.cursor()
     for vec in arr:
         vec =  good_vec(vec)
@@ -90,7 +91,7 @@ def insert_all_otbor(arr):
     info = ''
     count = 0
     q_err = 0
-    con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
     cur = con.cursor()
     for vec in arr:
         #vec =  good_vec(vec)
@@ -181,7 +182,7 @@ def table_to_file(tname):
     q_err = 0
     arr = []
     try:
-        con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
         cur = con.cursor()
         cur.execute(f'SELECT *  FROM {tname}')
         rows = cur.fetchall()
@@ -384,7 +385,7 @@ def loger_pg(kind):
     info = ''
     data = get_history_data()
     nau = date_log()
-    con = psycopg2.connect(database="drm", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
     cur = con.cursor()
     for vec in data:
         query = f""" INSERT INTO logi (department, termial, serial_number, address, datalog, kind)

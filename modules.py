@@ -162,6 +162,17 @@ def text_to_file_cp1251(b, fname):
         file.write(b)
     return fname
 
+def now_date_normal():
+    ddd = datetime.date.today()
+    d = str(ddd.day)
+    if len(d) == 1:
+        d = '0' + d
+    m = str(ddd.month)
+    if len(m) == 1:
+        m = '0' + m
+    y = str(ddd.year)
+    return f'{d}.{m}.{y}'
+
 def now_date_kabinet():
     ddd = datetime.date.today()
     d = str(ddd.day)

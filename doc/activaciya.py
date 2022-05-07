@@ -2,7 +2,7 @@ import os.path, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir)) 
 
 from modules import *
-from doc_papa import *
+from doc_papa_activciya import *
 
 class Activaciya():
 
@@ -13,8 +13,8 @@ class Activaciya():
         WHERE terminals.termial = otbor.term
         AND departments.department = otbor.dep;"""
 
-        head = "№ п/п;№ відділення ТОВ«ЕПС»;Адреса відділення; ЗН;ФН;Дата активації"
+        head = "№ п/п;№ відділення ТОВ«ЕПС»;Адреса відділення; ЗН;ФН;Дата"
         fName = "Activaciya.csv"
-        self.info = doc_papa(query, head, fName)
+        self.info = doc_papa_activaciya(query, head, fName)
 
         

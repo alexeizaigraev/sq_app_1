@@ -186,6 +186,11 @@ class WinFunc:
         mytext = str(self.text_box.get(1.0, END)).strip()
         self.work_param(main, mytext)
 
+    def otbor_all_on_dep(self):
+        from db.otbor_all_on_dep import main
+        mytext = str(self.text_box.get(1.0, END)).strip()
+        self.work_param(main, mytext)
+
     def otbor_text_list_term(self):
         from db.add_otbor_hard_term import OtborHardTerm
         mytext = str(self.text_box.get(1.0, END)).strip()
