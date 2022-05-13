@@ -9,12 +9,15 @@ from modules import *
 from datetime import datetime
 import shutil
 
-from papa_pg import select_deps_to_file, select_terms_to_file
+from papa_pg import select_deps_to_file_gdrive, select_terms_to_file_gdrive
 
 def accback():
     info = ''
-    info += select_terms_to_file()
-    info += select_deps_to_file()
+    #info += select_terms_to_file()
+    #info += select_deps_to_file()
+
+    info += select_terms_to_file_gdrive()
+    info += select_deps_to_file_gdrive()
     return info
 
         

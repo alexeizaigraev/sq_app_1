@@ -1,7 +1,9 @@
-from modules import *
-from papa_pg import dbexec 
+import os.path, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir)) 
 
-dbexec("""
+from papa_pg import * 
+
+db_operator("""
             CREATE TABLE IF NOT EXISTS terminals (
             department TEXT DEFAULT '',
             termial TEXT PRIMARY KEY DEFAULT '',
@@ -31,7 +33,7 @@ print('terminals ok')
 
 #________________________________
 
-dbexec("""
+db_operator("""
             CREATE TABLE IF NOT EXISTS departments (
             department TEXT PRIMARY KEY DEFAULT '',
             region TEXT DEFAULT '',
@@ -59,7 +61,7 @@ print('departments ok')
 
 #_____________________________________
 
-dbexec("""
+db_operator("""
             CREATE TABLE IF NOT EXISTS otbor (
             term TEXT PRIMARY KEY DEFAULT '',
             dep TEXT DEFAULT ''
@@ -69,7 +71,7 @@ print('otbor ok')
 
 #______________________________
 
-dbexec("""
+db_operator("""
             CREATE TABLE IF NOT EXISTS logi (
             department TEXT DEFAULT '',
             termial TEXT DEFAULT '',

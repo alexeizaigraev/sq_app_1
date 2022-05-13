@@ -322,10 +322,11 @@ COMON_DATA_PATH = CONFIG_PATH + 'comon_data.csv'
 CONFIG_DIR_PATH = DATA_PATH + 'ConfigDir/'
 KABINET_DIR = file_to_arr_nosharp(CONFIG_PATH + 'ConfigKabinetPath.txt')[0]
 
-GDRIVE_PATH = file_to_arr_nosharp(CONFIG_PATH + 'ConfigGdrivePath.txt')[0]
-GDRIVE_BACKUP_PATH = file_to_arr_nosharp(CONFIG_PATH + 'backup_gdrive_path.txt')[0]
+GDRIVE_PATH = 'G:/Мой диск/'
+GDRIVE_BACKUP_PATH = GDRIVE_PATH + 'PG_BACKUP/'
 
-PG_BACKUP_PATH = 'R:/DRM/BackupAccess/'
+#PG_BACKUP_PATH = 'R:/DRM/BackupAccess/'
+PG_BACKUP_PATH = GDRIVE_BACKUP_PATH
 #PG_BACKUP_PATH = 'C:/PgBackUp/'
 
 if platform == 'linux':

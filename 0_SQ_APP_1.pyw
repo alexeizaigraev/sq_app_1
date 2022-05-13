@@ -110,7 +110,7 @@ class Win(WinFunc):
 
 
         refresh_menu_data = [
-            ["из акцесса", self.refresh_from_access],
+            ["indata -> pg", self.indata_to_pg],
         ]
         
         self.refresh_memu = Menu(self.main_menu, tearoff=0, bg = 'cyan', fg='darkblue')
@@ -179,7 +179,7 @@ class Win(WinFunc):
         
 
         refresh_memu_data = [
-            ["из акцесса", self.refresh_from_access],
+            ["indata -> pg", self.indata_to_pg],
         ]
 
         self.refresh_memu = Menu(self.main_menu, tearoff=0, bg = 'cyan', fg='darkblue')
@@ -273,7 +273,14 @@ class Win(WinFunc):
         self.btn_clearlb = None
         self.mk_btn_fillX([self.btn_clearlb, "сотри лб", self.clear_lb])
 
-        self.button_refresh_from_access = tk.Button(text="из акцесса", command=self.refresh_from_access, background = self.bg_color, foreground='darkgreen')
+
+        self.button_refresh_from_access = tk.Button(text="gdrive -> pq", command=self.gdrive_to_pg, background = self.bg_color, foreground='darkgreen')
+        self.button_refresh_from_access.pack(side='top', padx=10, pady=10, fill=X)
+        self.button_refresh_from_access['font'] = self.buttonFont
+
+
+
+        self.button_refresh_from_access = tk.Button(text="in_data -> pq", command=self.indata_to_pg, background = self.bg_color, foreground='darkgreen')
         self.button_refresh_from_access.pack(side='top', padx=10, pady=10, fill=X)
         self.button_refresh_from_access['font'] = self.buttonFont
 
@@ -291,7 +298,7 @@ class Win(WinFunc):
         self.btn_winkabinet['font'] = self.buttonFont
 
 
-        self.button_refresh_to_access = tk.Button(text="в акцесс", command=self.refresh_to_access, background = self.bg_color, foreground='darkmagenta')
+        self.button_refresh_to_access = tk.Button(text="pg -> in_data", command=self.pg_to_indata, background = self.bg_color, foreground='darkmagenta')
         self.button_refresh_to_access.pack(side='top', padx=10, pady=10, fill=X)
         self.button_refresh_to_access['font'] = self.buttonFont
 

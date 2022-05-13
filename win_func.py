@@ -590,11 +590,12 @@ class WinFunc:
                 self.lb.insert(END, item)
             self.lb_status = 'term'
 
-    def refresh_to_access(self):
+    def pg_to_indata(self):
         self.clear_me()
         txt = ''
         txt += select_deps_to_file()
         txt += select_terms_to_file()
+        """
         app_path = 'C:/ToAccessRelease/ToAccess1.exe'
         try:
             os.system(app_path)
@@ -602,9 +603,31 @@ class WinFunc:
             txt += 'ToAccess1 finish\n'
         except Exception as ex:
             txt += f'{str(ex)}\n\n'
+        """
         self.text_box.insert(1.0, txt)
 
-    def refresh_from_access(self):
+    def refresh_to_access(self):
+        self.clear_me()
+        txt = ''
+        txt += select_deps_to_file()
+        txt += select_terms_to_file()
+        """
+        app_path = 'C:/ToAccessRelease/ToAccess1.exe'
+        try:
+            os.system(app_path)
+            #clear_me()
+            txt += 'ToAccess1 finish\n'
+        except Exception as ex:
+            txt += f'{str(ex)}\n\n'
+        """
+        self.text_box.insert(1.0, txt)
+
+    def gdrive_to_pg(self):
+        from db.rungdrive import main
+        u = main
+        self.work(u)
+
+    def indata_to_pg(self):
         from db.runsharp import main
         u = main
         self.work(u)

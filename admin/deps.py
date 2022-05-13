@@ -1,9 +1,9 @@
 from modules import *
 #from papa_sq import db_operator
-from papa_pg import dbexec
+from papa_pg import db_operator
 
 
-dbexec("""
+db_operator("""
             CREATE TABLE IF NOT EXISTS departments (
             department TEXT PRIMARY KEY DEFAULT '',
             region TEXT DEFAULT '',

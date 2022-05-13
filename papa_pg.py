@@ -1,14 +1,15 @@
+import sqlite3
 from modules import *
-import psycopg2
 from datetime import datetime
 import shutil
 
-
+def get_con():
+    return sqlite3.connect(IN_DATA_PATH + 'drm.db')
 
 def db_operator(execstr, vec=[]):
     info = ''
     try:
-        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = get_con()
         info += "open\n"
         cur = con.cursor()
         if vec:
@@ -28,7 +29,7 @@ def db_operator(execstr, vec=[]):
 def get_data(query):
     arr = []
     try:
-        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = get_con()
         cur = con.cursor()
         cur.execute(query)
         rows = cur.fetchall()
@@ -49,13 +50,16 @@ def vec_to_query(vec):
         vec[i] = f"'{vec[i]}'"
     return ','.join(vec)
 
+
+
+
 def refresh_table(table_name, fname):
     clear_table(table_name)
     info = ''
     count = 0
     q_err = 0
     arr = file_to_arr_nosharp(fname)[1:]
-    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = get_con()
     cur = con.cursor()
     for vec in arr:
         vec =  good_vec(vec)
@@ -80,6 +84,15 @@ def refresh_table(table_name, fname):
 #______________________________
 
 
+def term_from_gdrive():
+    return refresh_table('terminals', PG_BACKUP_PATH + 'terminals.csv')
+
+def dep_from_gdrive():
+    return refresh_table('departments', PG_BACKUP_PATH + 'departments.csv')
+
+
+
+
 def term_from_file_full():
     return refresh_table('terminals', IN_DATA_PATH + 'terminals.csv')
 
@@ -91,7 +104,7 @@ def insert_all_otbor(arr):
     info = ''
     count = 0
     q_err = 0
-    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = get_con()
     cur = con.cursor()
     for vec in arr:
         #vec =  good_vec(vec)
@@ -177,12 +190,51 @@ def date_log():
     return f'{y}.{m}.{d}'
 
 
+def table_to_file_gdrive(tname):
+    info = ''
+    q_err = 0
+    arr = []
+    try:
+        con = get_con()
+        cur = con.cursor()
+        cur.execute(f'SELECT *  FROM {tname}')
+        rows = cur.fetchall()
+    except (Exception) as error:
+        q_err += 1
+        info == str(error) + '\n'
+    finally:
+        if con:
+            cur.close()
+            con.close()
+
+    if tname == 'departments':
+        text = 'department;region;district_region;district_city;city_type;city;street;street_type;hous;post_index;partner;status;register;edrpou;address;partner_name;id_terminal;koatu;tax_id;koatu2\n'
+    else:
+        text = 'department;termial;model;serial_number;date_manufacture;soft;producer;rne_rro;sealing;fiscal_number;oro_serial;oro_number;ticket_serial;ticket_1sheet;ticket_number;sending;books_arhiv;tickets_arhiv;to_rro;owner_rro;register;finish\n'
+
+    for vec in rows:
+        text += ';'.join(vec) + '\n'
+    fname = f'{PG_BACKUP_PATH}{tname}.csv'
+    text_to_file(text, fname)
+    info += fname + '\n'
+    try:
+        fname_new = f'{PG_BACKUP_PATH}{date_log()}_{tname}.csv'
+        shutil.copy(fname, fname_new)
+        info += fname_new + '\n'
+    except Exception as ex:
+        info += f'\n{ex}\n'
+
+    return info
+
+
+
+
 def table_to_file(tname):
     info = ''
     q_err = 0
     arr = []
     try:
-        con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+        con = get_con()
         cur = con.cursor()
         cur.execute(f'SELECT *  FROM {tname}')
         rows = cur.fetchall()
@@ -219,6 +271,12 @@ def select_terms_to_file():
  
 def select_deps_to_file():
     return table_to_file('departments')
+
+def select_terms_to_file_gdrive():
+    return table_to_file_gdrive('terminals')
+ 
+def select_deps_to_file_gdrive():
+    return table_to_file_gdrive('departments')
 
 
 def select_deps():
@@ -385,7 +443,7 @@ def loger_pg(kind):
     info = ''
     data = get_history_data()
     nau = date_log()
-    con = psycopg2.connect(database="postgres", user = "postgres", password = "postgres", host = "127.0.0.1", port = "5432")
+    con = get_con()
     cur = con.cursor()
     for vec in data:
         query = f""" INSERT INTO logi (department, termial, serial_number, address, datalog, kind)
